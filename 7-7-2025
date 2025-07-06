@@ -1,0 +1,34 @@
+// next permutation
+class Solution {
+    public void nextPermutation(int[] nums) {
+        int n = nums.length;
+        if(n == 1) return;
+        int i = 1;
+        int peakelement = -1;
+        while(i < n)
+        {
+            if(nums[i] > nums[i-1])
+              peakelement = i;
+            i++;
+        }
+        if(peakelement == -1)
+        {
+            Arrays.sort(nums);
+            return;
+        }
+        int mn = nums[peakelement];
+        int index = peakelement;
+        for(int j = peakelement; j<n; j++)
+        {
+            if(nums[j] > nums[peakelement -1] && nums[j] < nums[index])
+            {
+                index = j;
+            }
+        }
+        int temp = nums[peakelement-1];
+        nums[peakelement-1] = nums[index];
+        nums[index] = temp;
+        Arrays.sort(nums,peakelement,n);
+
+    }
+}
