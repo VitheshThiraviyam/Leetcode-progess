@@ -1,0 +1,104 @@
+//Kadane 's Algorithm (Max subaaray sum)
+
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int maxs = Integer.MIN_VALUE;
+        int sum = 0;
+        for(int i = 0; i<nums.length; i++)
+        {
+            sum = sum+nums[i];
+            if(maxs < sum)
+            {
+                maxs = sum;
+            }
+            if(sum < 0)
+            {
+                sum = 0;
+            }
+        }
+        return maxs;
+    }
+}
+
+//Best time to buy a stock and sell
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        int mins = prices[0];
+        int maxs = 0;
+        for(int i=1; i<prices.length; i++)
+        {
+            int profit = prices[i] - mins;
+            maxs = Math.max(maxs,profit);
+            mins = Math.min(mins,prices[i]);
+        }
+        return maxs;
+    }
+}
+
+//Set matrix zero 
+
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        int col = 1;
+        for(int i = 0; i<matrix.length; i++)
+        {
+            for(int j = 0; j<matrix[0].length; j++)
+            {
+                if(matrix[i][j] == 0)
+                {
+                    matrix[i][0] = 0;
+                    if(j!=0) matrix[0][j] = 0;
+                    else col = 0;
+                }
+            }
+        }
+        for(int i = 1; i<matrix.length; i++)
+        {
+            for(int j = 1; j<matrix[0].length; j++)
+            {
+                if(matrix[i][0] == 0 || matrix[0][j] ==0)
+                {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        if(matrix[0][0] == 0)
+        {
+            for(int i = 0; i<matrix[0].length; i++) matrix[0][i] = 0;
+        }
+        if(col == 0)
+        {
+            for(int i = 0; i<matrix.length; i++) matrix[i][0] = 0;
+        }
+    }
+}
+
+//Rotate image
+
+class Solution {
+    public void rotate(int[][] matrix) {
+        for(int i = 0; i<matrix.length-1; i++)
+        {
+            for(int j = i+1; j<matrix.length; j++)
+            {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+        for(int i = 0; i<matrix.length; i++)
+        {
+            int left = 0;
+            int right = matrix.length-1;
+            while(left < right)
+            {
+                int temp = matrix[i][right];
+                matrix[i][right] = matrix[i][left];
+                matrix[i][left] = temp;
+                left++;
+                right--;
+            }
+        }
+    }
+}
