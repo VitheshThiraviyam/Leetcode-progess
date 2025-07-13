@@ -1,0 +1,87 @@
+// majority element 2
+
+class Solution {
+    public List<Integer> majorityElement(int[] nums) {
+        int count1 = 0;
+        int count2 = 0;
+        Integer element1 = null;
+        Integer element2 = null;
+
+        for (int num : nums) {
+            if (element1 != null && num == element1) {
+                count1++;
+            } else if (element2 != null && num == element2) {
+                count2++;
+            } else if (count1 == 0) {
+                element1 = num;
+                count1 = 1;
+            } else if (count2 == 0) {
+                element2 = num;
+                count2 = 1;
+            } else {
+                count1--;
+                count2--;
+            }
+        }
+
+        // Count actual occurrences
+        count1 = 0;
+        count2 = 0;
+        for (int num : nums) {
+            if (element1 != null && num == element1) count1++;
+            else if (element2 != null && num == element2) count2++;
+        }
+
+        List<Integer> ans = new ArrayList<>();
+        int n = nums.length;
+        if (count1 > n / 3) ans.add(element1);
+        if (count2 > n / 3) ans.add(element2);
+        return ans;
+    }
+}
+
+// 4 sum
+
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> ans = new ArrayList<>();
+        Arrays.sort(nums);
+        for(int i = 0; i<nums.length; i++)
+        {
+            if(i>0 && nums[i] == nums[i-1]) continue;
+            for(int j = i+1; j<nums.length; j++)
+            {
+                if(j != i+1 && nums[j] == nums[j-1])continue;
+                int k = j+1;
+                int l = nums.length-1;
+                while(k<l)
+                {
+                    long sum = 1L* nums[i]+nums[j]+nums[k]+nums[l];
+                    if(sum < target)
+                    {
+                        k++;
+                    }
+                    else if(sum > target)
+                    {
+                        l--;
+                    }
+                    else
+                    {
+                        List<Integer>anss = new ArrayList<>();
+                        anss.add(nums[i]);
+                        anss.add(nums[j]);
+                        anss.add(nums[k]);
+                        anss.add(nums[l]);
+                        ans.add(anss);
+                        k++;
+                        l--;
+                        while(k<l && nums[k] == nums[k-1]) k++;
+                        while(k<l && nums[l] == nums[l+1]) l--;
+                    }
+                }
+            }
+        }
+        return ans;
+
+    }
+}
